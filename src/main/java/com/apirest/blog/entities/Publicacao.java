@@ -34,6 +34,10 @@ public class Publicacao extends AuditModel {
     private String titulo;
 
     @NotNull
-    @Lob // Para mapear campos grandes de objetos binários
+    @Size(max = 250)
     private String descricao;
+
+    @NotNull
+    @Lob // Para mapear campos grandes de objetos binários
+    private String conteudo;
 }

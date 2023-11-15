@@ -14,6 +14,6 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
 
     Page<Comentario> findByPublicacaoId(Long publicacaoId, Pageable pageable);
 
-    Optional<Comentario> findByIdComentarioIdAndPublicacaoId(Long comentarioId, Long publicacaoId);
+    Optional<Comentario> findByIdAndPublicacaoId(Long comentarioId, Long publicacaoId);
 
 }
