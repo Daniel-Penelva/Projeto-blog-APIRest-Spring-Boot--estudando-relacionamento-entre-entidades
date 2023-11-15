@@ -287,7 +287,7 @@ Principais elementos dessa classe:
 
 Em resumo, essa classe `AuditModel` fornece funcionalidades comuns de auditoria para entidades JPA, incluindo rastreamento de data de criação e data da última modificação. Outras entidades podem estender `AuditModel` para herdar automaticamente essas características sem a necessidade de repetir a definição de campos e comportamentos de auditoria em cada entidade.
 
-# Super `@EnableJpaAuditing`
+# Anotação `@EnableJpaAuditing`
 
 A anotação `@EnableJpaAuditing` é uma anotação de configuração no ecossistema Spring e é frequentemente usada em aplicativos que utilizam a Java Persistence API (JPA) para interagir com bancos de dados relacionais. Essa anotação faz parte do Spring Data JPA e é usada para habilitar a funcionalidade de auditoria oferecida por esse projeto.
 
@@ -318,3 +318,37 @@ Com essa configuração, o Spring Data JPA estará pronto para rastrear automati
 Sem `@EnableJpaAuditing` teria que configurar manualmente um ouvinte de entidade (entity listener) para tratar esses eventos de auditoria. `@EnableJpaAuditing` simplifica esse processo e é uma maneira eficaz de adicionar funcionalidades de auditoria às suas entidades JPA com menos código de configuração manual.
 
 Note que o `@EnableJpaAuditing` também permite que customize a configuração de auditoria, como definir o nome do auditor atual ou configurar um `DateTimeProvider` personalizado para fornecer as datas e horas relevantes durante a auditoria. Essas configurações adicionais são úteis quando precisa de um controle mais fino sobre o processo de auditoria.
+
+# Anotação `@Lob`
+
+A anotação `@Lob` em Java (Java Persistence API - JPA) é usada para mapear campos grandes de objetos binários (LOB - Large Objects) em entidades JPA. LOBs geralmente representam dados binários extensos, como arquivos de imagem, áudio, vídeo ou até mesmo grandes blocos de texto.
+
+A anotação `@Lob` pode ser aplicada a campos de tipo `byte[]` ou `Byte[]`, ou a campos de tipo `String`. A escolha do tipo depende do tipo de dados que você está armazenando. Aqui está um exemplo básico de como ela pode ser usada:
+
+```java
+@Entity
+public class SuaEntidade {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Lob
+    private byte[] dadosBinarios;
+
+    // ou
+
+    @Lob
+    private String textoLongo;
+
+    // outros atributos, construtores, getters e setters
+}
+```
+
+Neste exemplo, a entidade `SuaEntidade` possui um campo chamado `dadosBinarios` que é anotado com `@Lob`. Isso indica ao provedor JPA que esse campo deve ser mapeado como um LOB, permitindo o armazenamento de dados binários grandes.
+
+Além disso, é possível usar `@Lob` com campos de texto longo (`String`). O exemplo também mostra um campo chamado `textoLongo` que também é anotado com `@Lob`. Isso permite que o campo armazene grandes quantidades de texto.
+
+Em termos de mapeamento no banco de dados, o uso de `@Lob` geralmente resulta em um tipo de dado específico para LOBs, como `BLOB` (Binary Large Object) ou `CLOB` (Character Large Object), dependendo do tipo de dados que está sendo armazenado.
+
+A anotação `@Lob` é útil quando você precisa armazenar dados grandes, como documentos, imagens ou outros tipos de arquivos binários, dentro de suas entidades JPA.
