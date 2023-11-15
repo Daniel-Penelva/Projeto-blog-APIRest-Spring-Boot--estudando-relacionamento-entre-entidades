@@ -286,3 +286,35 @@ Principais elementos dessa classe:
    - `dataAtualizacao`: Campo que armazena a data da última modificação da entidade. Também usa `@Temporal(TemporalType.TIMESTAMP)` para representar data e hora.
 
 Em resumo, essa classe `AuditModel` fornece funcionalidades comuns de auditoria para entidades JPA, incluindo rastreamento de data de criação e data da última modificação. Outras entidades podem estender `AuditModel` para herdar automaticamente essas características sem a necessidade de repetir a definição de campos e comportamentos de auditoria em cada entidade.
+
+# Super `@EnableJpaAuditing`
+
+A anotação `@EnableJpaAuditing` é uma anotação de configuração no ecossistema Spring e é frequentemente usada em aplicativos que utilizam a Java Persistence API (JPA) para interagir com bancos de dados relacionais. Essa anotação faz parte do Spring Data JPA e é usada para habilitar a funcionalidade de auditoria oferecida por esse projeto.
+
+Quando adiciona `@EnableJpaAuditing` a uma classe de configuração ou à classe principal da sua aplicação Spring, você está indicando ao Spring para habilitar a auditoria automática para entidades JPA. A funcionalidade de auditoria rastreia automaticamente as datas de criação e modificação de entidades, preenchendo automaticamente os campos anotados com `@CreatedDate` e `@LastModifiedDate`.
+
+Exemplo típico de uso:
+
+```java
+package com.apirest.blog;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+@SpringBootApplication
+@EnableJpaAuditing
+public class BlogApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BlogApplication.class, args);
+	}
+
+}
+```
+
+Com essa configuração, o Spring Data JPA estará pronto para rastrear automaticamente as datas de criação e modificação nas entidades que utilizam as anotações `@CreatedDate` e `@LastModifiedDate`.
+
+Sem `@EnableJpaAuditing` teria que configurar manualmente um ouvinte de entidade (entity listener) para tratar esses eventos de auditoria. `@EnableJpaAuditing` simplifica esse processo e é uma maneira eficaz de adicionar funcionalidades de auditoria às suas entidades JPA com menos código de configuração manual.
+
+Note que o `@EnableJpaAuditing` também permite que customize a configuração de auditoria, como definir o nome do auditor atual ou configurar um `DateTimeProvider` personalizado para fornecer as datas e horas relevantes durante a auditoria. Essas configurações adicionais são úteis quando precisa de um controle mais fino sobre o processo de auditoria.
